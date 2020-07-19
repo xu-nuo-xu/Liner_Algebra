@@ -35,6 +35,7 @@
     - [Lec_27——正定矩阵](#lec_27正定矩阵)
     - [Lec_28——相似矩阵和Jordan标准型](#lec_28相似矩阵和jordan标准型)
     - [Lec_29——奇异值分解](#lec_29奇异值分解)
+    - [Lec_33——左右逆和伪逆](#lec_33左右逆和伪逆)
 
 <!-- /TOC -->
 # 线性代数的本质
@@ -373,7 +374,7 @@ b2 的意思，也就是说，我们为了消除以 b1，b2作为基向量的误
 >现在，所有的内容已经解释完毕。最后Shout out to 3Blue1Brown！
 
 # 矩阵论学习历程
->在下面的部分我将记录一些关于大三暑假矩阵论学习过程中的内容。这里并不是涵盖了所有的知识点，只是在听课或者学习中觉得重要的知识点。<br>
+>在下面的部分我将记录一些关于大三暑假矩阵论学习过程中的内容。这里并不是涵盖了所有的知识点，只是在听课或者学习中觉得重要的知识点。并且文中很多情况并不呈现详尽的代数证明，只是为了让大多只有本科线性代数基础的同学更好的理解矩阵论课本的内容。若有错误，请帮忙指出。<br>
 以下内容来自于Strang教授MIT的线性代数课程<br>
 [(课程链接YouTube)](https://www.youtube.com/watch?v=YeznlKTrpmU&list=PL6839449936471E0C&index=1)<br>
 [(课程链接bilibili)](https://www.bilibili.com/video/BV1zx411g7gq?p=1)
@@ -639,10 +640,50 @@ b2 的意思，也就是说，我们为了消除以 b1，b2作为基向量的误
 >根据上图的形式我们知道 AT·A 是正定矩阵(Q·Λ·QT) 因此按照正定矩阵分解方法我们就能计算得到 V 矩阵和 Σ 。类似的，我们用 A·AT 可以消去 V ，从而求出 U，Σ (两个 Σ 是一样的，因为 AB 特征值等于 BA 特征值)。V是 AT·A 列空间的标准正交基为列向量的矩阵，σn^2 是对应的特征值<br>
 
 >之后又举了一个含有零空间的秩1矩阵的奇异值分解例子，其中 U 的第一列是 A·AT 的列空间标准正交基，第二列是对应的零空间的标准正交基(与第一列正交)，VT 的第一行是 AT·A 的列空间的标准正交基，第二行是对应的零空间的标准正交基，Σ 第二列第二行的 0 ，就是那个零空间对应的特征值 0 ：<br>
-<div align=center><img src="picture/秩1矩阵奇异值分解.png"  width="80%" height="80%"><br>
+<div align=center><img src="picture/秩1矩阵奇异值分解.png"  width="60%" height="60%"><br>
 <div align=left>
 <br>
 
 >实际上，奇异值分解在代数上表现就是 A 将一组正交基转化为另一组正交基。好了我们可以总结下了，对于任意实矩阵A的奇异值分解，它的右奇异向量(V的列向量)是 AT·A 的特征向量，它的左奇异向量(U的列向量)是 A·AT 的特征向量，而奇异值是这两个对称矩阵相同的非零特征值的平方根(实际上它们两个非零特征值一模一样)。SVD分解只告诉我们总是存在这样一个分解，并没有说这个分解是唯一的。很显然：特征值次序就可以不一样，显然SVD分解不唯一。但是我们常常把奇异值按照从大到小的顺序排列，这样S就可以由A唯一确定了。<br>
 
 >奇异值分解其实是一个很值得探究的问题，这里的我解释也是冰山一角，我们可以参考作者whitefang这个知乎回答，相比来说就全面的多了：[奇异值分解的意义](https://www.zhihu.com/question/22237507)
+
+## Lec_33——左右逆和伪逆
+>如果 A 为 m * n 矩阵，且列满秩，则 r(AT·A) = r(A) ([同解方程组秩相等](https://www.zybang.com/question/a8e327ac6f818f9d4c3a96cc1795fa3a.html))，那么 AT·A 的秩为 n ，即满秩方阵，所以可逆，因此有：(AT·A)^-1·AT·A = I，而我们把 (AT·A)^-1·AT 称为 A 的左逆：<br>
+<div align=center><img src="picture/左逆.png"  width="40%" height="40%"><br>
+<div align=left>
+<br>
+
+>类似的，对于行满秩的情况，我们可以得到右逆的定义：<br>
+<div align=center><img src="picture/右逆.png"  width="40%" height="40%"><br>
+<div align=left>
+<br>
+
+>而我们如果把左逆写在 A 的右边会得到一个投影矩阵，投影到 A 的列空间：<br>
+<div align=center><img src="picture/左逆写到右边.png"  width="40%" height="40%"><br>
+<div align=left>
+<br>
+
+>而我们如果把右逆写在 A 的左边也会得到一个投影矩阵，投影到 A 的行空间：<br>
+<div align=center><img src="picture/右逆写到左边.png"  width="40%" height="40%"><br>
+<div align=left>
+<br>
+
+>如果一个矩阵 A 它不是行满秩，也不是列满秩，此时就需要用到伪逆的概念。如果 A 本身可逆，伪逆就是逆，但当 r(A) < m 且 r(A) < n，则不存在逆、左逆、右逆，只存在伪逆。<br>
+伪逆是在奇异值分解的基础上得到的( U V 都是正交矩阵，因此对应的逆矩阵就是转置，但中间的对角阵 Σ 对角线上可能有零，因此不可逆，我们只能求相应的伪逆，也就是不为零的元素取倒数得到 Σ+)：<br>
+<div align=center><img src="picture/伪逆.png"  width="40%" height="40%"><br>
+<div align=left>
+<br>
+
+>至于伪逆空间意义，这里借用知乎上的一位上传的解释图，我们看到在零空间和左零空间存在的情况下，原本在行空间的向量 x+ 经过 A 的作用到了 A 的列空间中得到向量 p。其实这很好解释，我们都知道 A 作用到任意的向量 x 后，得到的向量都落在 A 的列空间中，x 只不过是列向量的线性组合。而得到 p 之后我们用 A+(伪逆)作用于 p 则会得到原本的向量 x ，这说明对于原本在行空间的向量 A+ 的作用和 A^-1 其实是一样的，但此时原向量 x+ 是由 A+·p 得到的。(这个中间的 b 我没太看懂)。因为两个零空间都不只有零向量，因此，当 A 作用到一些处于 A 的零空间向量时会变为 0 无法恢复，同样的若向量在左零空间中，我们也只能用 A+ 将其恢复到 0：<br>
+<div align=center><img src="picture/伪逆空间意义.jpg"  width="70%" height="70%"><br>
+<div align=left>
+<br>
+
+>至于伪逆意义(伪逆应用在最小二乘不再适用的场合，比如列向量线性相关时（不是满秩的）)：<br>
+<div align=center><img src="picture/伪逆意义2.jpg"  width="80%" height="80%"><br>
+<div align=left>
+<br>
+<div align=center><img src="picture/伪逆意义.jpg"  width="50%" height="50%"><br>
+<div align=left>
+<br>
