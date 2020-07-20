@@ -41,7 +41,7 @@
 # 线性代数的本质
 >本文参考3Blue1Brown的线性代数讲解视频，写下笔记和自己的认识。<br>
 [课程链接：youtube](https://www.youtube.com/watch?v=fNk_zzaMoSs&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab)<br>
-[课程链接：bilibili](https://www.bilibili.com/video/BV1ys411472E)<br>
+[课程链接：bilibili](https://www.bilibili.com/video/BV1s4411S78P?from=search&seid=12604659975522241651)<br>
 ## 序言
 >课程中3Blue1Brown主要用了大量精力给我们解释了线性代数中常见的向量操作、矩阵操作所表示的几何含义，并且制作出精美的动画演示过程。
 这对我们理解其中的奥秘十分重要，在科研过程中，如果只停留在计算和表示层面，我们很难有一个公式的直观理解
