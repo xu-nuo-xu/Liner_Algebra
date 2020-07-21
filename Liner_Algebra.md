@@ -16,7 +16,7 @@
     - [特征向量与特征值](#特征向量与特征值)
     - [抽象向量空间](#抽象向量空间)
     - [克拉默法则几何解释](#克拉默法则几何解释)
-- [矩阵论学习历程](#矩阵论学习历程)
+- [MIT线性代数课程学习历程](#mit线性代数课程学习历程)
     - [Lec_14——另一种视角的Ax = b](#lec_14另一种视角的ax--b)
     - [Lec_15、Lec_16——投影与投影矩阵与最小二乘](#lec_15lec_16投影与投影矩阵与最小二乘)
     - [Lec_17——正交矩阵和正交化方法](#lec_17正交矩阵和正交化方法)
@@ -36,6 +36,10 @@
     - [Lec_28——相似矩阵和Jordan标准型](#lec_28相似矩阵和jordan标准型)
     - [Lec_29——奇异值分解](#lec_29奇异值分解)
     - [Lec_33——左右逆和伪逆](#lec_33左右逆和伪逆)
+- [矩阵论课本学习历程](#矩阵论课本学习历程)
+    - [正交变换与正交矩阵、对称变换与对称矩阵](#正交变换与正交矩阵对称变换与对称矩阵)
+- [MIT 18.065 Matrix Methods in Data Analysis, Signal Processing, and Machine Learning, Spring 2018](#mit-18065-matrix-methods-in-data-analysis-signal-processing-and-machine-learning-spring-2018)
+    - [1. The Column Space of A Contains All Vectors Ax](#1-the-column-space-of-a-contains-all-vectors-ax)
 
 <!-- /TOC -->
 # 线性代数的本质
@@ -371,8 +375,8 @@ b2 的意思，也就是说，我们为了消除以 b1，b2作为基向量的误
 
 >现在，所有的内容已经解释完毕。最后Shout out to 3Blue1Brown！
 
-# 矩阵论学习历程
->在下面的部分我将记录一些关于大三暑假矩阵论学习过程中的内容。这里并不是涵盖了所有的知识点，只是在听课或者学习中觉得重要的知识点。并且文中很多情况并不呈现详尽的代数证明，只是为了让大多只有本科线性代数基础的同学更好的理解矩阵论课本的内容。若有错误，请帮忙指出。<br>
+# MIT线性代数课程学习历程
+>在下面的部分我将记录一些关于 MIT 线性代数课程学习过程中的内容。这里并不是涵盖了所有的知识点，只是在听课或者学习中觉得重要的知识点。并且文中很多情况并不呈现详尽的代数证明，只是为了让大多只有本科线性代数基础的同学更好的理解矩阵论课本的内容。若有错误，请帮忙指出。<br>
 以下内容来自于Strang教授MIT的线性代数课程<br>
 [(课程链接YouTube)](https://www.youtube.com/watch?v=YeznlKTrpmU&list=PL6839449936471E0C&index=1)<br>
 [(课程链接bilibili)](https://www.bilibili.com/video/BV1zx411g7gq?p=1)
@@ -721,10 +725,40 @@ b2 的意思，也就是说，我们为了消除以 b1，b2作为基向量的误
 <div align=left>
 <br>
 
->至于伪逆意义(伪逆应用在最小二乘不再适用的场合，比如列向量线性相关时（不是满秩的）)：<br>
+>至于伪逆意义(伪逆应用在最小二乘不再适用的场合，比如列向量线性相���时（不是满秩的）)：<br>
 <div align=center><img src="picture/伪逆意义2.jpg"  width="80%" height="80%"><br>
 <div align=left>
 <br>
 <div align=center><img src="picture/伪逆意义.jpg"  width="50%" height="50%"><br>
+<div align=left>
+<br>
+
+# 矩阵论课本学习历程
+>因为学习顺序和之前基础的原因，我就从1.3节正交变换与正交矩阵开始记录。并且我记录的不是所有知识点，只是一些觉得重要的或者有启发性的内容。这部分暂时不更新，假期看书真的不太好看进去，等什么时候静下心来再更吧。
+
+## 正交变换与正交矩阵、对称变换与对称矩阵
+>需要指出的是，**正交变换在几何中指的是空间中任意向量 x 的模保持不变的变换过程**。当然，与正交变换对应的矩阵就是正交矩阵。至于正交矩阵的特点上面的内容也介绍过。其次，**正交变换在标准正交基下的矩阵是正交矩阵，但是，他在别的基下的矩阵可能是正交矩阵，也可能不是**。比如之前在《线性代数的本质》中相似矩阵那一节提到的，不同基下的空间旋转变换，在一个非标准基下对应的矩阵就不是正交矩阵。欧式空间中，两组标准正交基的转换，也是由正交矩阵连接起来的。
+<br>类似的，对于对称变换的定义是这样的：(Tx,y) = (x,Ty)。而欧氏空间的线性变换是实对称变换的充要条件是：他对于正交基的矩阵是实对称矩阵。对于别的基就不一定了。
+
+# MIT 18.065 Matrix Methods in Data Analysis, Signal Processing, and Machine Learning, Spring 2018
+>从这个标题可以看到这是 Gilbert Strang 在 2018 年 MIT 的又一课程，查矩阵范数的内容时突然发现的，刚好不想看书(人懒)，就先学这个吧。[课程链接：youtube](https://www.youtube.com/watch?v=Cx5Z-OslNWE&list=PLUl4u3cNGP63oMNUHXqIUcrkS2PivhN3k)。建议安装Dualsub谷歌浏览器翻译插件进行学习。<br>课程主题主要分为四个部分：<br>
+<div align=center><img src="picture/课程大纲.png"  width="40%" height="40%"><br>
+<div align=left>
+<br>
+
+>可以看到，这个系列课程与计算机专业息息相关，是之前线性代数课程的一个延申。并且该课程有一些在线编程类项目作业，而没有期末考试。可以用 Matlab/Python/Julia 等工具/语言完成。好的，现在我们开始走进这门课。<br>
+<div align=center><img src="picture/老师.png"  width="70%" height="70%"><br>
+<div align=left>
+<br>
+
+## 1. The Column Space of A Contains All Vectors Ax
+>本节课没有太多内容，主要提到的是两点内容：矩阵的 CR 分解，矩阵乘法的另一种看待方式。<br>
+首先，矩阵 A = C·R 分解中，C 代表列空间的基组成的矩阵，其中的基向量是从 A 矩阵中的列向量中原封不动的抽取的，只要是线性无关的就加进来。R 代表行空间的基组成的矩阵，其中的基不是从 A 中直接获得，而是通过一定计算推导而得(课上的矩阵很简单，就直接看出来了)。特别的，我们发现 C 的最后一行中的 5 7 如果和 R 矩阵的两个行向量进行组合恰好就是 A 的第三行，这其实不是巧合，也许之后我们会再次接触这样的内容：<br>
+<div align=center><img src="picture/CR分解.png"  width="50%" height="50%"><br>
+<div align=left>
+<br>
+
+>矩阵乘法 A = B·C (A 为 m * n 矩阵)我们之前总用 B 的行向量点乘 C 的列向量来得到。然而，还有一种看待方式是用 B 的第 k 列向量乘 C 的第 k 行向量来得到矩阵(k = 1,2,...,n)，之后把各个矩阵相加，这样的计算次数和之前是相同的。<br>
+<div align=center><img src="picture/矩阵乘法另一种方式.png"  width="80%" height="80%"><br>
 <div align=left>
 <br>
