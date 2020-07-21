@@ -1,5 +1,5 @@
 # Liner Algebra Tutorial
-具体内容见Liner_Algebra.md文件
+具体内容见Liner_Algebra.md文件。持续更新中。
 
 ## 线性代数的本质部分
 >本文参考3Blue1Brown的线性代数讲解视频，写下笔记和自己的认识。<br>
