@@ -40,6 +40,10 @@
     - [正交变换与正交矩阵、对称变换与对称矩阵](#正交变换与正交矩阵对称变换与对称矩阵)
 - [MIT 18.065 Matrix Methods in Data Analysis, Signal Processing, and Machine Learning, Spring 2018](#mit-18065-matrix-methods-in-data-analysis-signal-processing-and-machine-learning-spring-2018)
     - [1. The Column Space of A Contains All Vectors Ax](#1-the-column-space-of-a-contains-all-vectors-ax)
+    - [2. Multiplying and Factoring Matrices](#2-multiplying-and-factoring-matrices)
+    - [3. Orthonormal Columns in Q Give Q'Q = I](#3-orthonormal-columns-in-q-give-qq--i)
+    - [4. Eigenvalues and Eigenvectors](#4-eigenvalues-and-eigenvectors)
+    - [5. Positive Definite and Semidefinite Matrices](#5-positive-definite-and-semidefinite-matrices)
 
 <!-- /TOC -->
 # 线性代数的本质
@@ -760,5 +764,46 @@ b2 的意思，也就是说，我们为了消除以 b1，b2作为基向量的误
 
 >矩阵乘法 A = B·C (A 为 m * n 矩阵)我们之前总用 B 的行向量点乘 C 的列向量来得到。然而，还有一种看待方式是用 B 的第 k 列向量乘 C 的第 k 行向量来得到矩阵(k = 1,2,...,n)，之后把各个矩阵相加，这样的计算次数和之前是相同的。<br>
 <div align=center><img src="picture/矩阵乘法另一种方式.png"  width="80%" height="80%"><br>
+<div align=left>
+<br>
+
+## 2. Multiplying and Factoring Matrices
+>开始教授提到了五种之前讲过的矩阵分解方式(Factoring)。之后讲了一些关于秩1矩阵分解，矩阵乘法，四个基本子空间的内容，之前也都提到过，在此不再赘述。：<br>
+<div align=center><img src="picture/矩阵分解.png"  width="60%" height="60%"><br>
+<div align=left>
+<br>
+
+## 3. Orthonormal Columns in Q Give Q'Q = I
+>本节课的重点在正交矩阵，教授开始讲了旋转矩阵的正交性，之后又引出了反射矩阵(det为负的情景)的正交性，Householder矩阵的正交性：<br>
+<div align=center><img src="picture/反射矩阵.png"  width="70%" height="70%"><br>
+<div align=left>
+<br>
+
+>Hadamard矩阵正交性：<br>
+<div align=center><img src="picture/Hadamard.png"  width="70%" height="70%"><br>
+<div align=left>
+<br>
+
+>Haar小波矩阵(图像压缩中讲过)正交性(可进一步将列向量单位化)：<br>
+<div align=center><img src="picture/Haar.png"  width="70%" height="70%"><br>
+<div align=left>
+<br>
+
+>傅里叶矩阵(四阶)正交性：<br>
+<div align=center><img src="picture/傅里叶.png"  width="50%" height="50%"><br>
+<div align=left>
+<br>
+
+## 4. Eigenvalues and Eigenvectors
+>这节课首先需要注意的是矩阵 AB 和 BA 的相似关系。AB 和 BA 相似，相似矩阵 M = B，因此 AB 和 BA有相同的特征值，但是 A 的特征值乘 B 的特征值往往不等于 AB 的特征值，同样 A 的特征值加 B 的特征值往往不等于 A + B 的特征值：<br>
+<div align=center><img src="picture/AB和BA.png"  width="70%" height="70%"><br>
+<div align=left>
+<br>
+
+>其次就是，实对称矩阵具有实特征值，实对称矩阵的正交分解：A = Q·Λ·QT，也称之为谱定理。其他内容就是一些回顾性内容了。
+
+## 5. Positive Definite and Semidefinite Matrices
+>课堂主要是一些关于正定矩阵和半正定矩阵的验证，以及一些回顾性内容，下图列出了五个判定正定的条件，半正定往往只需要稍作修改即可(大于变成大于等于)：<br>
+<div align=center><img src="picture/正定半正定.png"  width="70%" height="70%"><br>
 <div align=left>
 <br>
