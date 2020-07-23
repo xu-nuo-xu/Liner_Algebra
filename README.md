@@ -1,5 +1,5 @@
 # Liner Algebra Tutorial
-具体内容见Liner_Algebra.md文件。持续更新中。
+具体内容见Liner_Algebra.md文件和MIT 18.065.md文件。持续更新中。
 
 ## 线性代数的本质部分
 >本文参考3Blue1Brown的线性代数讲解视频，写下笔记和自己的认识。<br>
@@ -15,3 +15,10 @@
 [(课程链接YouTube)](https://www.youtube.com/watch?v=YeznlKTrpmU&list=PL6839449936471E0C&index=1)<br>
 [(课程链接bilibili)](https://www.bilibili.com/video/BV1zx411g7gq?p=1)
 
+## 矩阵论课本学习历程
+>因为学习顺序和之前基础的原因，我就从1.3节正交变换与正交矩阵开始记录。并且我记录的不是所有知识点，只是一些觉得重要的或者有启发性的内容。这部分暂时不更新，假期看书真的不太好看进去，等什么时候静下心来再更吧。
+
+## MIT 18.065 Matrix Methods in Data Analysis, Signal Processing, and Machine Learning, Spring 2018
+>从这个标题可以看到这是 Gilbert Strang 在 2018 年 MIT 的又一课程，查矩阵范数的内容时突然发现的，刚好不想看书(人懒)，就先学这个吧。[课程链接：youtube](https://www.youtube.com/watch?v=Cx5Z-OslNWE&list=PLUl4u3cNGP63oMNUHXqIUcrkS2PivhN3k)。建议安装Dualsub谷歌浏览器翻译插件进行学习。<br>
+
+>课程主题主要分为四个部分：线性代数、数据分析、优化、深度学习。可以看到，这个系列课程与计算机专业息息相关，是之前线性代数课程的一个延申。并且该课程有一些在线编程类项目作业，而没有期末考试，可以用 Matlab/Python/Julia 等工具/语言完成。
