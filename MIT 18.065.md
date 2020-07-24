@@ -13,6 +13,7 @@
     - [10. Survey of Difficulties with Ax = b](#10-survey-of-difficulties-with-ax--b)
     - [11. Minimizing _x_ Subject to Ax = b](#11-minimizing-_x_-subject-to-ax--b)
     - [14. Low Rank Changes in A and Its Inverse](#14-low-rank-changes-in-a-and-its-inverse)
+    - [15. Matrices A(t) Depending on t, Derivative = dA/dt](#15-matrices-at-depending-on-t-derivative--dadt)
 
 <!-- /TOC -->
 # MIT 18.065 Matrix Methods in Data Analysis, Signal Processing, and Machine Learning, Spring 2018
@@ -226,3 +227,26 @@
 <br>
 
 >BTW，这一节的公式推导都没有给出，只是对于前两个关于单位矩阵 I 的扰动公式的正确性进行了验证，这个也很好验证。
+
+## 15. Matrices A(t) Depending on t, Derivative = dA/dt
+>这节课开头，教授给我们讲了 A^-1 的导数与 A 的导数的关系，如下图所示。先构建一个恒等式 B^-1 - A^-1 = B^-1·(A - B)·A^-1，然后我们把 B 看作 A 矩阵的增量矩阵，即 B = A + ΔA，再两边除以 Δt 可以得到下面的式子。注意，如果 B = A + ΔA 那么 B^-1 - A^-1 在意义上就能表示 ΔA^-1 ，就像 B - A = ΔA 一个道理：<br> 
+<div align=center><img src="picture/A逆导数.png"  width="70%" height="70%"><br>
+<div align=left>
+<br>
+
+>之后我们再让 Δt -> 0，就得到了微分的形式。我们可以把 A 当作 1 * 1 矩阵 [t] 来验证正确性，即其中 A^-1 = 1/t：<br> 
+<div align=center><img src="picture/微分形式.png"  width="60%" height="60%"><br>
+<div align=left>
+<br>
+
+>现在我们解决 dλ/dt 的问题，如下图。其中矩阵 A、A的特征值(λ)、A的特征向量(x)、A行空间的特征值(与 A 特征值相同)、A 行空间的特征向量(y)，都和 t 有关。我们可以得到第一行的 Fact ，其中后面那个的写法不常见，但是确实有如此写法来描述行空间特征向量和特征值关系的公式(我不知道为什么)。然后，yT·x = 1 的原因下面有一个评论说是因为 Matlab/人工 在处理时，往往对特征向量进行归一化，之后我们对 Fact2 两边同右乘 x(t) 得到 Formula 1(最后一行)，经过化简恰好是 λ(t) ，然后就可以对其求导：<br> 
+<div align=center><img src="picture/λt.png"  width="60%" height="60%"><br>
+<div align=left>
+<br>
+
+>求导结果如下，神奇的是第一项和第三项相消为 0 (没看懂)，结果只剩下第二项就是 dλ/dt 的值：<br> 
+<div align=center><img src="picture/λt求导结果.png"  width="60%" height="60%"><br>
+<div align=left>
+<br>
+
+>最后又讲了一些关于 interlacing theorem 交错定理的内容，但是我听的半懂不懂，并且似乎不是很重要，我就不放上笔记了。
