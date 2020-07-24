@@ -12,6 +12,7 @@
     - [9. Four Ways to Solve Least Squares Problems](#9-four-ways-to-solve-least-squares-problems)
     - [10. Survey of Difficulties with Ax = b](#10-survey-of-difficulties-with-ax--b)
     - [11. Minimizing _x_ Subject to Ax = b](#11-minimizing-_x_-subject-to-ax--b)
+    - [14. Low Rank Changes in A and Its Inverse](#14-low-rank-changes-in-a-and-its-inverse)
 
 <!-- /TOC -->
 # MIT 18.065 Matrix Methods in Data Analysis, Signal Processing, and Machine Learning, Spring 2018
@@ -188,3 +189,40 @@
 <br>
 
 >还有最后提到 Krylov 子空间迭代。
+
+## 14. Low Rank Changes in A and Its Inverse
+>本节课主要提到了在实际问题中会遇到的矩阵秩 k 扰动问题。我们常常会先解决一个类似 Ax = b 的问题，但是随着时间变化，我们收集到更多的数据，或者改动以往的数据，那么此时的 A 发生变化，当然问题的解 x 也会发生变化。我们如果不知道矩阵扰动的相关公式，那么就得从头开始重新计算一遍。但有了相关公式，我们就可以根据之前的解和扰动因素得到新的解，大大降低了运算代价。<br>
+>教授主要讲了三种矩阵扰动的公式，如下图所示，第一种是对单位矩阵 I 秩为 1 的扰动，第二种是对单位矩阵 I 秩为 k 的扰动，第三种是对任意矩阵 A 秩为 k 的扰动，只要我知道了他们的逆矩阵如图所示则新结果 x 也就得出了：<br>
+<div align=center><img src="picture/矩阵扰动.png"  width="70%" height="70%"><br>
+<div align=left>
+<br>
+
+>我们依次来看相应的公式。第一种如下图，我们可以用逆矩阵乘本身的技巧来验证这个是正确的：<br>
+<div align=center><img src="picture/扰动1.png"  width="70%" height="70%"><br>
+<div align=left>
+<br>
+
+>第二种如下图，我们可以用相同的验证方式：<br>
+<div align=center><img src="picture/扰动2.png"  width="70%" height="70%"><br>
+<div align=left>
+<br>
+
+>第三种如下图，这种就类似我们实际中的问题了：<br>
+<div align=center><img src="picture/扰动3.png"  width="70%" height="70%"><br>
+<div align=left>
+<br>
+
+>教授给我们举了最小二乘的动态问题，即不断有新样本加入的问题，如下图所示，我们在原本 AT·A·x = AT·b 的基础上给 A 增加了更多的行 vT (样本)，而此时我们问题的构造就如下图一样，也就是给 AT·A 了一个秩为 r(v·vT) 的扰动，而要求得 x-new 的值。这个问题类似于卡尔曼滤波器，如果之后碰见再细究：<br>
+<div align=center><img src="picture/最小二乘扰动.png"  width="70%" height="70%"><br>
+<div align=left>
+<br>
+
+>而扰动问题的解决如下图所示，我们常常在解决一个带有扰动的新问题时(第二行)，已经解决了一个基础问题 A·w = b ，而此时如果我们能解决 A·z = u，那么就可以用已知的解来组合为新问题的解，新问题的解的形式见第二张图(这个形式好像有点问题)：<br>
+<div align=center><img src="picture/扰动问题.png"  width="70%" height="70%"><br>
+<div align=left>
+<br>
+<div align=center><img src="picture/扰动解.png"  width="40%" height="40%"><br>
+<div align=left>
+<br>
+
+>BTW，这一节的公式推导都没有给出，只是对于前两个关于单位矩阵 I 的扰动公式的正确性进行了验证，这个也很好验证。
