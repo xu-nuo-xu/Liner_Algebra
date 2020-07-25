@@ -14,6 +14,10 @@
     - [11. Minimizing _x_ Subject to Ax = b](#11-minimizing-_x_-subject-to-ax--b)
     - [14. Low Rank Changes in A and Its Inverse](#14-low-rank-changes-in-a-and-its-inverse)
     - [15. Matrices A(t) Depending on t, Derivative = dA/dt](#15-matrices-at-depending-on-t-derivative--dadt)
+    - [16. Derivatives of Inverse and Singular Values](#16-derivatives-of-inverse-and-singular-values)
+    - [17. Rapidly Decreasing Singular Values](#17-rapidly-decreasing-singular-values)
+    - [18. Counting Parameters in SVD, LU, QR, Saddle Points](#18-counting-parameters-in-svd-lu-qr-saddle-points)
+    - [19. Saddle Points Continued, Maxmin Principle](#19-saddle-points-continued-maxmin-principle)
 
 <!-- /TOC -->
 # MIT 18.065 Matrix Methods in Data Analysis, Signal Processing, and Machine Learning, Spring 2018
@@ -250,3 +254,102 @@
 <br>
 
 >最后又讲了一些关于 interlacing theorem 交错定理的内容，但是我听的半懂不懂，并且似乎不是很重要，我就不放上笔记了。
+
+## 16. Derivatives of Inverse and Singular Values
+>承接上节课，教授讲了 dσ/dt 的公式，和 dλ/dt 的证明方法类似，得出的结论也类似：<br> 
+<div align=center><img src="picture/dσdt.png"  width="40%" height="40%"><br>
+<div align=left>
+<br>
+
+>证明过程如下，和 dλ/dt 的开头类似，教授用一个三项的乘积代表 σ(t) ，这是从 SVD 中的 Av=σu 中得来的，之后用求导法则求 σ(t) 的导数，最后只留下中间项，第一项第三项都为 0 ，并且我们看 uT·u = 1 的导数（最右边），(duT/dt)·u 和 uT·(du/dt)这两项其实是相等的，所以 du/dt = 0。同理：dv / dt = 0，所以第一项第三项为 0 ：<br> 
+<div align=center><img src="picture/dσdt证明过程.png"  width="80%" height="80%"><br>
+<div align=left>
+<br>
+
+## 17. Rapidly Decreasing Singular Values
+>本节课是由 Alex Townsend 讲述，主要讲述关于低阶矩阵的问题。首先为我们陈述了三个关于矩阵奇异值的 Fact 。如果矩阵 x 是 n * n 方阵，前 k 个奇异值大于 0，后面的都小于零，则有：1. 矩阵 x 的秩为 k；2. 矩阵 x 可以分解为 k 个秩 1 矩阵相加的形式；3. 矩阵的行秩和列秩都为 k：<br> 
+<div align=center><img src="picture/奇异值Fact.png"  width="70%" height="70%"><br>
+<div align=left>
+<br>
+
+>于是，Alex 给我们举了各个国家的国旗例子。我们可以看到右上角第一行的国旗如果用低秩矩阵展开的形式(上面第二个 Fact)发送的话应该都很容易，因为他们有很多相同的行，而第二行的如日本国旗似乎就不那么理想，第三行含有三角的是最不理想的。因此当我们碰到低秩矩阵时，用展开形式发送简单，而高秩形式就直接发送原矩阵更快捷。至于低秩的具体数字描述见下图第一行，因为我们如果把整个n阶矩阵发送的话，开销为 n^2 ，而秩为 k 的矩阵展开我们有 k 项，每一项有 2n 个条目，因此开销为 2kn，如果 2kn < n^2，我们就称为低秩。但在实际操作中，我们往往要求 k << n/2：<br> 
+<div align=center><img src="picture/三角旗.png"  width="80%" height="80%"><br>
+<div align=left>
+<br>
+
+>上图中的三角旗为什么发送开销大呢？Alex 给我们推出了类似左下角形式的下三角 n 阶矩阵的相关逆矩阵，我们由 (XT·X)^-1，就能得出矩阵 X 奇异值相关信息，在最后一行 Alex 给我们写出了三角旗矩阵 X 的奇异值，我们发现都不为 0 ，并且不收敛到 0。归一化后画出了奇异值图像，横坐标是第 i 个奇异值，纵坐标是归一化后各奇异值大小。
+
+>之后，就到了圆形旗如日本旗那样，如下图所示。我们可以从旗的中间圆形掏出一个正方形，这样正方形的秩就为 1，剩下的部分就是轴对称图形，我们可以取 1/4，秩是和原来相同的，这 1/4 可以分为两个部分，我们分别计算二者的秩，最后结果取决于图中圆的半径 r，大约下来是 1/2·r-1 也不会很大：<br> 
+<div align=center><img src="picture/日本旗.png"  width="60%" height="60%"><br>
+<div align=left>
+<br>
+
+>接下来介绍了数字秩(Numerical rank)的定义，其中 ε 是一个容忍度，我们可以看到 Numerical rank 关联的是奇异值，而不是特征值。而当 ε = 0 时，Numerical rank 就等于 rank 了：<br> 
+<div align=center><img src="picture/数字秩.png"  width="60%" height="60%"><br>
+<div align=left>
+<br>
+
+>在实际中有很多 Numerical low rank 矩阵，如下图所示的 Hilbert 矩阵和 Vandermonde 矩阵，这两个矩阵其实是满秩的，但是 Numerical rank 很低。从定义中我们能推测出 Numerical rank 往往会筛出奇异值很低的部分。Numerical low rank 矩阵不总是好的，因为他们的逆矩阵很难求：<br> 
+<div align=center><img src="picture/低数值秩矩阵.png"  width="60%" height="60%"><br>
+<div align=left>
+<br>
+
+## 18. Counting Parameters in SVD, LU, QR, Saddle Points
+>本节课我们逐渐向概率、优化、深度学习进行过渡。首先，教授给我们讲了在计算中各种矩阵分解的参数个数，如下图所示，下面我依次进行推导：<br> 
+<div align=center><img src="picture/矩阵参数个数.png"  width="60%" height="60%"><br>
+<div align=left>
+<br>
+
+>首先我们从单个矩阵开始看。<br>
+L 代表单位上三角矩阵，对角线元素都为 1，因此对角线 元素不算参数，参数个数为：1+2+...+(n-1) = 1/2·n·(n-1)。<br>
+U 代表下三角矩阵，但是对角线元素不设限，因此参数个数为：1+2+...+n = 1/2·n·(n+1)。<br>
+Q 代表正交矩阵，正交矩阵的特点是列向量标准化，且两两正交；因此我们选择 Q 的第一列时只需要 n-1 个参数，第 n 个值只需要利用标准化性质计算可得。第二列除了标准化性质，还有与第一列正交性质，因此只需要 n-2 个参数。第三列除了标准化性质，还有与第一、二列正交性质，因此只需要 n-3 个参数，以此类推。总参数个数为：(n-1)+(n-2)+...+(1) = 1/2·n·(n-1)<br>
+Λ 代表对角矩阵，当然有 n 个参数。<br>
+X 代表特征矩阵，计算机在处理时往往有个约定，就是特征向量第一个值为 1 ，这个可以通过对特征向量乘以一个合适的常数 c 来得到。因此参数总数为 n^2 - n。<br>
+
+>下面我们开始看分解矩阵的参数个数。<br>
+A = LU ，L、U两个矩阵可以由上面分别得到参数个数，总的参数个数为：1/2·n·(n-1)+1/2·n·(n+1)=n^2<br>
+A = QR ，Q 是正交矩阵，R 是上三角矩阵但是对角线不限制，因此，总的参数个数为：1/2·n·(n-1)+1/2·n·(n+1)=n^2<br>
+A = XΛX^-1，X 和 X^-1只需要取一个另一个就知道了，总的参数个数为：n^2 - n + n = n^2<br>
+S = QΛQT，Q和QT只需要取一个另一个就知道了，总的参数个数为： 1/2·n·(n-1) + n = 1/2·n·(n+1)<br>
+A = QS (polar decomposition极分解)，Q是正交矩阵，S是对称矩阵，总的参数个数为：1/2·n·(n-1)+1/2·n·(n+1) = n^2<br>
+A = U·Σ·VT，这个比较麻烦，我们用下面的图进行解释。我们首先假设矩阵 A 是 m * n 的，并且行满秩，即 r(A) = m，并且 m < n。然后对于 U、Σ、VT 的尺寸见下图所示，U 是秩为 m 的正交矩阵，当然参数个数为：1/2·m·(m-1)。Σ 秩为 m ，当然参数个数为：m。最后 VT 有些特别，虽然它是 n * n 的但是它只有 m 列是未知的，且相互标准正交，这部分的参数个数为：(n-1)+(n-2)+...+(n-m)。剩下的 n - m 列是来源于零空间正交的标准基向量，因此我们不关心它们的值。所以这三部分加起来恰好是 m * n 个参数。<br> 
+<div align=center><img src="picture/奇异值分解参数.png"  width="60%" height="60%"><br>
+<div align=left>
+<br>
+
+>对于 SVD，更加 general 的情况是 rank(A) = r < m < n。此时，分解矩阵的各部分尺寸见下图所示，此时第一部分参数个数为：(m-1)+(m-2)+...+(m-r)，对角矩阵参数个数为：r，第三部分参数个数为：(n-1)+(n-2)+...+(n-r)，加起来参数个数是: mr+nr-r^2<br> 
+<div align=center><img src="picture/SVD秩r.png"  width="40%" height="40%"><br>
+<div align=left>
+<br>
+
+>接下来介绍关于拉格朗日乘数法的内容，如下图。我们在遇到求 min 1/2·xT·S·x 的问题时，往往会遇到 Ax = b 的限定。于是我们构造 L(x，λ) 分别对 x，λ 求导，得到右下角的矩阵形式方程组。这样求出来的 x 就是鞍点，而不是最值点，因为在 x 方向是最值，但是有 λ 项的约束。鞍点（Saddle point）在微分方程中，沿着某一方向是稳定的，另一条方向是不稳定的奇点，叫做鞍点：<br> 
+<div align=center><img src="picture/拉格朗日乘数法.png"  width="80%" height="80%"><br>
+<div align=left>
+<br>
+
+>鞍点的图像如下：<br>
+<div align=center><img src="picture/鞍点.png"  width="40%" height="40%"><br>
+<div align=left>
+<br>
+
+>而对于上述矩阵形式方程组我们能做什么呢？我们可以进行如下变换，于是我们就可以得知主元正负的情况(我也不知道这一步的目的是在干嘛)：<br> 
+<div align=center><img src="picture/拉格朗日乘数法相关变换.png"  width="60%" height="60%"><br>
+<div align=left>
+<br>
+
+>我们还可以引出瑞利熵(Rayleigh Quotient)：我们看到 R(x) 的最大值就是矩阵 S 最大的特征值 λ1，x 为相应的特征向量 q1，最小值就是矩阵 S 最小的特征值 λn，x 为相应的特征向量 qn。在这之间的其他一些特征值和对应的特征向量得到的 R(x) 就是鞍点：<br> 
+<div align=center><img src="picture/Rayleigh.png"  width="60%" height="60%"><br>
+<div align=left>
+<br>
+
+## 19. Saddle Points Continued, Maxmin Principle
+>承接上一节，我们讲一下为什么其他特征值对应的特征向量得到的 R(x) 就是鞍点。我们先看一下下面的一个例子。我们取 S 为一个正定矩阵，R(x) 展开的形式也呈现在板书上，特征值以及各特征向量见左下角。其中每个特征向量点对应的 R(x) 的一阶导数都为 0 ，可以当作一个 Fact：<br> 
+<div align=center><img src="picture/鞍点2.png"  width="60%" height="60%"><br>
+<div align=left>
+<br>
+
+>现在我们研究各个特征值，首先最小值和最大值是显而易见的，而位于中间的特征值 λ2 = 3，有什么特点呢？下面的板书有点混乱，我来解释一下。首先，我们的结论是：λ2 是 R(x) 的一个鞍点，并且在某一个二维子空间内是最大值点，在另一个二维子空间内是最小值点。我们取子空间 (u,v,0) ，如右下角所示，这是 λ1 对应特征值 (1,0,0) 和 λ2 对应特征值 (0,1,0) 张成的子空间，在这个子空间内 R(x) 的最小值为 3 ，对应的 R(x) 展开式见右上角；但在 λ2 对应特征值 (0,1,0) 和 λ3 对应特征值 (0,0,1) 张成的子空间 (0,v,w) 内，R(x) = 3 是最大值：<br> 
+<div align=center><img src="picture/中间鞍点.png"  width="60%" height="60%"><br>
+<div align=left>
+<br>
