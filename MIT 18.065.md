@@ -18,6 +18,7 @@
     - [17. Rapidly Decreasing Singular Values](#17-rapidly-decreasing-singular-values)
     - [18. Counting Parameters in SVD, LU, QR, Saddle Points](#18-counting-parameters-in-svd-lu-qr-saddle-points)
     - [19. Saddle Points Continued, Maxmin Principle](#19-saddle-points-continued-maxmin-principle)
+    - [20. Definitions and Inequalities](#20-definitions-and-inequalities)
 
 <!-- /TOC -->
 # MIT 18.065 Matrix Methods in Data Analysis, Signal Processing, and Machine Learning, Spring 2018
@@ -351,5 +352,46 @@ A = U·Σ·VT，这个比较麻烦，我们用下面的图进行解释。我们�
 
 >现在我们研究各个特征值，首先最小值和最大值是显而易见的，而位于中间的特征值 λ2 = 3，有什么特点呢？下面的板书有点混乱，我来解释一下。首先，我们的结论是：λ2 是 R(x) 的一个鞍点，并且在某一个二维子空间内是最大值点，在另一个二维子空间内是最小值点。我们取子空间 (u,v,0) ，如右下角所示，这是 λ1 对应特征值 (1,0,0) 和 λ2 对应特征值 (0,1,0) 张成的子空间，在这个子空间内 R(x) 的最小值为 3 ，对应的 R(x) 展开式见右上角；但在 λ2 对应特征值 (0,1,0) 和 λ3 对应特征值 (0,0,1) 张成的子空间 (0,v,w) 内，R(x) = 3 是最大值：<br> 
 <div align=center><img src="picture/中间鞍点.png"  width="60%" height="60%"><br>
+<div align=left>
+<br>
+
+>最后教授提到了关于均值、方差的内容，为了引出下节课的协方差矩阵。关于均值，我们分为样本均值和均值的期望(expected mean)。同理，方差也分为样本方差和方差的期望。他们也都有离散和连续情况的公式。下图 1 是关于均值，下图 2 是关于方差(注意大写的 N 表示实验次数，小写的 n 代表实验结果的可能数)：<br> 
+<div align=center><img src="picture/均值.png"  width="60%" height="60%"><br>
+<div align=left>
+<br>
+<div align=center><img src="picture/方差.png"  width="60%" height="60%"><br>
+<div align=left>
+<br>
+
+## 20. Definitions and Inequalities
+>本节课我们主要讨论概率，因为这是深度学习很重要的一部分。首先，教授接着上节课给我们讲了关于方差的内容，我们从上节课的方差公式可以进一步进行化简(注意倒数第二行的第二项其实是 2E[X] ，但是 E[X] = m = 均值，于是得到图中的公式)：<br> 
+<div align=center><img src="picture/方差化简.png"  width="60%" height="60%"><br>
+<div align=left>
+<br>
+
+>之后介绍了马尔可夫不等式，这在之前的概率论课程中也讲过。需要注意的是马尔可夫不等式成立的前提假设是 xi >= 0：<br> 
+<div align=center><img src="picture/马尔可夫不等式.png"  width="70%" height="70%"><br>
+<div align=left>
+<br>
+
+>之后是切比雪夫不等式，这个不等式没有前提假设的要求：<br> 
+<div align=center><img src="picture/切比雪夫不等式.png"  width="50%" height="50%"><br>
+<div align=left>
+<br>
+
+>课上给出了用马尔可夫不等式证明切比雪夫不等式的过程，但是我感觉不太清晰，于是借用知乎上一位up的证明过程，至于更详细的两个不等式证明过程见[马尔可夫与切比雪夫](https://www.zhihu.com/question/27821324)：<br> 
+<div align=center><img src="picture/切比雪夫证明.png"  width="70%" height="70%"><br>
+<div align=left>
+<br>
+
+>在介绍协方差矩阵前，教授给我们举了一个抛硬币的例子，先告诉了我们什么是张量(tensor)。当我们同时做两个抛硬币实验时，我们可以把两枚硬币横着粘起来，也可以两个单独做，这样我们可以写一个概率的矩阵：<br> 
+<div align=center><img src="picture/抛硬币2.png"  width="70%" height="70%"><br>
+<div align=left>
+<br>
+
+>但是当我们同时做三组抛硬币实验时，我们得到的概率图不是 3 * 3 的矩阵，而是一个 2 * 2 * 2 的立方体，每一维有两个结果：正/反，然后三组实验联合起来构成一个立方。这就是张量的形象描述。
+
+>最后就是协方差矩阵的内容了，当我们同时做两组抛硬币实验时，我们可以得到下面的二阶协方差矩阵 V 。我们可以看到协方差矩阵 V 是对称的，并且在左上角项和左下角项分别是实验 x 和实验 y 的结果方差，而在次对角线上描述的是 xy 的联合方差结果，表述了两个实验的相关性。当两枚硬币 unglued 时，次对角线上两个元素为 0；当两枚硬币 glued 时，次对角线上 σxy^2 = σx^2 + σy^2 ，此时矩阵 V 是奇异的，半正定的，其他情况 V 都是正定的。在此只做一个简要介绍，不做详细推理计算，有一个宏观概念即可：<br> 
+<div align=center><img src="picture/二阶协方差矩阵.png"  width="70%" height="70%"><br>
 <div align=left>
 <br>
