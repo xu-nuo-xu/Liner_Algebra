@@ -19,6 +19,8 @@
     - [18. Counting Parameters in SVD, LU, QR, Saddle Points](#18-counting-parameters-in-svd-lu-qr-saddle-points)
     - [19. Saddle Points Continued, Maxmin Principle](#19-saddle-points-continued-maxmin-principle)
     - [20. Definitions and Inequalities](#20-definitions-and-inequalities)
+    - [21. Minimizing a Function Step by Step](#21-minimizing-a-function-step-by-step)
+    - [22. Gradient Descent: Downhill to a Minimum](#22-gradient-descent-downhill-to-a-minimum)
 
 <!-- /TOC -->
 # MIT 18.065 Matrix Methods in Data Analysis, Signal Processing, and Machine Learning, Spring 2018
@@ -393,5 +395,66 @@ A = U·Σ·VT，这个比较麻烦，我们用下面的图进行解释。我们�
 
 >最后就是协方差矩阵的内容了，当我们同时做两组抛硬币实验时，我们可以得到下面的二阶协方差矩阵 V 。我们可以看到协方差矩阵 V 是对称的，并且在左上角项和左下角项分别是实验 x 和实验 y 的结果方差，而在次对角线上描述的是 xy 的联合方差结果，表述了两个实验的相关性。当两枚硬币 unglued 时，次对角线上两个元素为 0；当两枚硬币 glued 时，次对角线上 σxy^2 = σx^2 + σy^2 ，此时矩阵 V 是奇异的，半正定的，其他情况 V 都是正定的。在此只做一个简要介绍，不做详细推理计算，有一个宏观概念即可：<br> 
 <div align=center><img src="picture/二阶协方差矩阵.png"  width="70%" height="70%"><br>
+<div align=left>
+<br>
+
+## 21. Minimizing a Function Step by Step
+>本节课我们介绍 optimization 优化问题。首先教授提到关于函数近似的内容，如下图所示，很明显这里是用泰勒展开式来进行近似的，但是稍有不同的是，第二行将泰特展开扩展到了矩阵形式。这时 x 不再是单变量，而是一个向量 [ x1,x2...xn ]，函数 F 对 x 的导数就成了梯度(为一个向量)，F 对 x 的二阶导数就是一个 Hessian 矩阵：<br> 
+<div align=center><img src="picture/函数近似.png"  width="60%" height="60%"><br>
+<div align=left>
+<br>
+
+>关于梯度定义和 Hessian 矩阵定义。其中，黑塞矩阵（Hessian Matrix），又译作海森矩阵、海瑟矩阵、海塞矩阵等，是一个多元函数的二阶偏导数构成的方阵，描述了函数的局部曲率。黑塞矩阵常用于牛顿法解决优化问题，利用黑塞矩阵可判定多元函数的极值问题。在工程实际问题的优化设计中，所列的目标函数往往很复杂，为了使问题简化，常常将目标函数在某点邻域展开成泰勒多项式来逼近原函数，此时函数在某点泰勒展开式的矩阵形式中会涉及到黑塞矩阵：<br> 
+<div align=center><img src="picture/梯度.png"  width="100%" height="100%"><br>
+<div align=left>
+<br><div align=center><img src="picture/Hessian矩阵.png"  width="50%" height="50%"><br>
+<div align=left>
+<br>
+
+>下面叫要介绍 Jacobian 矩阵，注意和 Hessian 矩阵进行区分，<br> 
+<div align=center><img src="picture/Jacobian.png"  width="100%" height="100%"><br>
+<div align=left>
+<br>
+
+>知道了 Jacobian 矩阵，我们就能引出牛顿下山法的内容。此方法是基于光滑函数（导函数连续）通过迭代将零点邻域内一个任选的点收敛至该零点（也就是方程的解）。<br> 
+<div align=center><img src="picture/牛顿法公式.png"  width="60%" height="60%"><br>
+<div align=left>
+<br>
+<div align=center><img src="picture/牛顿下山法.jpg"  width="40%" height="40%"><br>
+<div align=left>
+<br>
+
+>上面是基于一元函数在一维时的情况，当我们扩展到高维情况公式就变为下图所示情景。注意，这里只是在求高维函数的零点：<br> 
+<div align=center><img src="picture/牛顿法高维.png"  width="60%" height="60%"><br>
+<div align=left>
+<br>
+
+>那我们如解决高维函数的优化问题呢？其实就是解决梯度为 0 的情况，即求梯度函数的零点。一种方法是 Steep descent，在此不做证明；另一种是牛顿法优化：<br> 
+<div align=center><img src="picture/优化.png"  width="60%" height="60%"><br>
+<div align=left>
+<br>
+
+>我们主要证明的是牛顿优化问题，因为板书上的证明过程很简略我就用知乎上的一个证明，如下图。我们看到 Steep descent 每次的变化参数是一个固定值 s ，也就相当于学习率的概念。但是牛顿法这里用的是 Hessian 矩阵，因此会更加合适，收敛会快一些：<br> 
+<div align=center><img src="picture/牛顿优化.png"  width="80%" height="80%"><br>
+<div align=left>
+<br>
+
+>最后教授又提到了关于凸函数的证明问题，在一元情况中，我们只需要证明二阶导数大于等于 0，则这个函数是凸函数。但是多元中我们需要证明 f(x) = xT·S·x >= 0，其中 S 是 Hessian 矩阵(当曲线光滑时，Hessian 矩阵为对阵矩阵 symmetric ，我们用 S 代替)。也就是说 Hessian 矩阵必须是一个正定/半正定矩阵，我们就可以说原函数是一个凸函数。
+
+>ps.中国大陆数学界某些机构关于函数凹凸性定义和国外的定义是相反的。Convex Function在某些中国大陆的数学书中指凹函数。Concave Function指凸函数。课堂上 Convex 指的是凸函数，如开口向上的一元抛物线函数，或开口向上的碗状二元函数。
+
+## 22. Gradient Descent: Downhill to a Minimum
+>在本节课开始，教授讲了两个关于求函数梯度的例子。第一个例子，我们设一个严格的凸函数(Hessian正定) f(x)，如下图所示。我们要求这个严格凸函数的最小值，于是我们求对向量 x 的梯度 ᐁf = 0，得到在 x* 处取得最小值，最小值点代入可得最小值 fmin 图中未带入计算：<br> 
+<div align=center><img src="picture/凸函数最值例1.png"  width="80%" height="80%"><br>
+<div align=left>
+<br>
+
+>第二个例子是另一个函数 f(X)，这里 X 为一个矩阵，如下图(我们把 log 理解成 ln 来看后面的推导)：<br> 
+<div align=center><img src="picture/梯度例2.png"  width="60%" height="80%"><br>
+<div align=left>
+<br>
+
+>我们都知道对 f(X) 求导结果为：if f(X) = -ln(det(X)), gradient(f) = (derivatives of det(X))/det(X) in matrix form (ln函数求导规则)，而 derivatives of det(X) 是个什么呢？我们在线性代数中学过行列式按行展开，如下图，我们此时按第一行展开，而这样看 det(X) 对 x11 求偏导，其实就是第一个括号里的内容，也就是我们常说的伴随矩阵 A* ，对其他元素的导数以此类推。而我们发现，构造的这个函数对 X 的导数形式，恰好就是 X^-1 ，因为我们在线代中学过 A^-1 = A* / det(A)。因此这个函数的梯度 ᐁf，就是 entries of X^-1，结果见上图右下角。<br> 
+<div align=center><img src="picture/按行展开.png"  width="60%" height="80%"><br>
 <div align=left>
 <br>

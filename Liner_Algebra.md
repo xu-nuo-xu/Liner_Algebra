@@ -723,7 +723,7 @@ b2 的意思，也就是说，我们为了消除以 b1，b2作为基向量的误
 <div align=left>
 <br>
 
->至于伪逆意义(伪逆应用在最小二乘不再适用的场合，比如列向量线性相���时（不是满秩的）)：<br>
+>至于伪逆意义(伪逆应用在最小二乘不再适用的场合，比如列向量线性相关时（不是满秩的）)：<br>
 <div align=center><img src="picture/伪逆意义2.jpg"  width="80%" height="80%"><br>
 <div align=left>
 <br>
