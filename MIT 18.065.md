@@ -21,6 +21,7 @@
     - [20. Definitions and Inequalities](#20-definitions-and-inequalities)
     - [21. Minimizing a Function Step by Step](#21-minimizing-a-function-step-by-step)
     - [22. Gradient Descent: Downhill to a Minimum](#22-gradient-descent-downhill-to-a-minimum)
+    - [23. Accelerating Gradient Descent (Use Momentum)](#23-accelerating-gradient-descent-use-momentum)
 
 <!-- /TOC -->
 # MIT 18.065 Matrix Methods in Data Analysis, Signal Processing, and Machine Learning, Spring 2018
@@ -435,7 +436,7 @@ A = U·Σ·VT，这个比较麻烦，我们用下面的图进行解释。我们�
 <br>
 
 >我们主要证明的是牛顿优化问题，因为板书上的证明过程很简略我就用知乎上的一个证明，如下图。我们看到 Steep descent 每次的变化参数是一个固定值 s ，也就相当于学习率的概念。但是牛顿法这里用的是 Hessian 矩阵，因此会更加合适，收敛会快一些：<br> 
-<div align=center><img src="picture/牛顿优化.png"  width="80%" height="80%"><br>
+<div align=center><img src="picture/牛顿优化.png"  width="70%" height="70%"><br>
 <div align=left>
 <br>
 
@@ -454,7 +455,26 @@ A = U·Σ·VT，这个比较麻烦，我们用下面的图进行解释。我们�
 <div align=left>
 <br>
 
->我们都知道对 f(X) 求导结果为：if f(X) = -ln(det(X)), gradient(f) = (derivatives of det(X))/det(X) in matrix form (ln函数求导规则)，而 derivatives of det(X) 是个什么呢？我们在线性代数中学过行列式按行展开，如下图，我们此时按第一行展开，而这样看 det(X) 对 x11 求偏导，其实就是第一个括号里的内容，也就是我们常说的伴随矩阵 A* ，对其他元素的导数以此类推。而我们发现，构造的这个函数对 X 的导数形式，恰好就是 X^-1 ，因为我们在线代中学过 A^-1 = A* / det(A)。因此这个函数的梯度 ᐁf，就是 entries of X^-1，结果见上图右下角。<br> 
-<div align=center><img src="picture/按行展开.png"  width="60%" height="80%"><br>
+>我们都知道对 f(X) 求导结果为：if f(X) = -ln(det(X)), gradient(f) = (derivatives of det(X))/det(X) in matrix form (ln函数求导规则)，而 derivatives of det(X) 是个什么呢？我们在线性代数中学过行列式按行展开，如下图，我们此时按第一行展开，而这样看 det(X) 对 x11 求偏导，其实就是第一个括号里的内容，也就是我们常说的伴随矩阵 A* 的第一项 (下图中叫 minor/cofactor )，对其他元素的导数以此类推。而我们发现，构造的这个函数对 X 的导数形式，恰好就是 X^-1 ，因为我们在线代中学过 A^-1 = A* / det(A)。因此这个函数的梯度 ᐁf，就是 entries of X^-1，结果见上图右下角。<br> 
+<div align=center><img src="picture/按行展开.png"  width="80%" height="80%"><br>
+<div align=left>
+<br>
+
+>最后教授讲了关于梯度下降的一个简单例子，如下图所示，我们假设优化的函数为 f(x) = 1/2·(x^2+by^2)，对应的矩阵 S 如下图2所示(其中，b < 1)。图2中的图就是 1/2·(x^2+by^2) = c 的图像(平面图)，如果我们从(x0,y0) = (b,1)点开始，优化过程中的 xk,yk,fk 值见图一，这里用的方法是 steep descent 公式见上文。我们可以看出如果 b 很小，那么平面图像就是细长的，对应的优化过程就是震荡 zigzag 很严重的，不好收敛，下节课我们进行详细推导：<br> 
+<div align=center><img src="picture/梯度下降例子.png"  width="70%" height="70%"><br>
+<div align=left>
+<br>
+
+<div align=center><img src="picture/优化函数.png"  width="60%" height="60%"><br>
+<div align=left>
+<br>
+
+## 23. Accelerating Gradient Descent (Use Momentum)
+>本节课主要提到了三个梯度下降的变式。<br>第一个就是 SGD (首先与minibatch概念注意区分 minibatch：一次取一部分训练数据的梯度下降。SGD 中我们选取输入数据 x 的一部分分量的梯度方向进行参数更新，因为总的 x 维度 d 往往很大，数据量 n 也很大，这种随机的选取分量梯度进行更新在我们远离最终结果时是很有效的，因为每一个分量对应的梯度都是往最优的方向走，但是当我们快到达最优解时会出现震荡，因为有些分量方向梯度趋于最优解，有些可能已经过了，但是在机器学习中，我们往往需要这种非最优解的训练结果来使系统有更高的鲁棒性。还有一点就是 SGD 比 GD 往往在学习率上更加敏感) 。<br>第二个是 Momentum，公式见下图1，可以看到这个方法在梯度选择上有所不同，第 k 次梯度下降的方向还参考了第 k-1 次方向的 β 倍，这样 zigzag 就没有之前那么厉害了。这个部分的优化图在 Pytorch 书 P63 页有一个示例。<br>第三种就是 Nesterov 方法，公式见下图 2，它采用的更新准则不是到达的点，而是第 k 次和第 k-1 次之间的点，选取的梯度也类似：
+<br> 
+<div align=center><img src="picture/Momentum.png"  width="40%" height="40%"><br>
+<div align=left>
+<br>
+<div align=center><img src="picture/Nesterov.png"  width="60%" height="40%"><br>
 <div align=left>
 <br>
