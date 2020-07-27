@@ -23,6 +23,7 @@
     - [22. Gradient Descent: Downhill to a Minimum](#22-gradient-descent-downhill-to-a-minimum)
     - [23. Accelerating Gradient Descent (Use Momentum)](#23-accelerating-gradient-descent-use-momentum)
     - [27. *Backpropagation(whole neural network process)](#27-backpropagationwhole-neural-network-process)
+    - [30. Completing a Rank-One Matrix, Circulants!](#30-completing-a-rank-one-matrix-circulants)
 
 <!-- /TOC -->
 # MIT 18.065 Matrix Methods in Data Analysis, Signal Processing, and Machine Learning, Spring 2018
@@ -481,7 +482,7 @@ A = U·Σ·VT，这个比较麻烦，我们用下面的图进行解释。我们�
 <br>
 
 ## 27. *Backpropagation(whole neural network process)
->关于反向传播算法可能是神经网络里最难理解的一个部分，我在这节课上也是听的一头雾水。因此，我看了看 [3Blue1Brown 的Backpropagation视频教学](https://www.bilibili.com/video/BV16x411V7Qg/?spm_id_from=333.788.videocard.1)，现在有了一些思路，下面我总结一下。我会从前向传递讲起，到反向传播，最后再到梯度下降。因为我觉得这种顺寻更加容易让人理解神经网络的整个运行过程。<br>
+>关于反向传播算法可能是神经网络里最难理解的一个部分，我在这节课上也是听的一头雾水。因此，我看了看 [3Blue1Brown 的Backpropagation视频教学](https://www.bilibili.com/video/BV16x411V7Qg/?spm_id_from=333.788.videocard.1)，现在有了一些思路，下面我总结一下。我会从前向传递讲起，到反向传播，最后再到梯度下降。因为我觉得这种顺序更加容易让人理解神经网络的整个运行过程。<br>
 首先，我们用下图做一个示例(不用在意图中文字)，图中是一个由四层神经元构成的神经网络，面向的是 28 * 28 像素的手写数字识别问题。首先第一层是由 784 个神经元构成，一个神经元代表一个像素，第二第三层都是 16 个神经元，最后一层代表分类结果一共用 10 个神经元，也就是 10 类。我们现在把每个神经元当作一个处在[0,1]的数据，我们称之为“激活值”，偏白色的就比较大接近 1，偏黑色的就比较小接近 0 。最后一层越白的神经元，代表图像越接近那个类别：<br> 
 <div align=center><img src="picture/反向传播1.png"  width="80%" height="80%"><br>
 <div align=left>
@@ -526,10 +527,42 @@ A = U·Σ·VT，这个比较麻烦，我们用下面的图进行解释。我们�
 <br>
 
 >不过上面图片得到的结果不过是最终梯度的一个分量，即 L 层的 w 对应的分量。我们要调整所有的参数，就要计算所有的梯度分量，如下图所示。在手写数字识别中，整个梯度向量是由 13002 个分量构成的。而反向传播的概念其实就可以引出了，我们观察上面的链式求导过程以及结果，可以观察到第 L 层的 w 对应梯度分量值其实是根据 L 层的 a(L)，期待输出值 y，z(L)，和上一层的结果 a(L-1) 共同决定的。那么，我们很容易推得，L-1 层的相关参数对应的梯度分量其实是由 L-1 层和 L-2 层相关值决定的，以此类推，我们可以得到所有的梯度分量——这就叫做梯度反向传播：<br> 
-<div align=center><img src="picture/反向传播9.png"  width="30%" height="50%"><br>
+<div align=center><img src="picture/反向传播9.png"  width="30%" height="30%"><br>
 <div align=left>
 <br>
 
 >梯度向量得到了，那么接下来梯度下降算法便得以实施，手写数字 13002 个参数依次更新，此时我们无论用 steep descent 还是牛顿的方法都是没问题的了。
 
 >最后我强调一点就是之前说的 SGD 在神经网络中的操作，如果我们每次用整个训练数据集进行输入计算，那么最后累加得到的梯度向量就一定是代价函数降低的方向。但是，这样开销有时候会让计算设备负担不起。因此我们采取 minibatch 的思想，一次取一小部分数据进行梯度累加，得到一个梯度向量，进行梯度下降更新。这样做的结果我们之前也提到过，就是开始时会很明显下降，但是接近最优解时会产生振荡。不过这样做无论是从速度还是鲁棒性来说都比 pure GD 要好。
+
+>[这里有个关于神经网络可视化理解的网站大家可以点进去玩一玩！](http://playground.tensorflow.org/#activation=tanh&batchSize=10&dataset=circle&regDataset=reg-plane&learningRate=0.03&regularizationRate=0&noise=0&networkShape=4,2&seed=0.07140&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=false&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=false&problem=classification&initZero=false&hideText=false)
+
+## 30. Completing a Rank-One Matrix, Circulants!
+>本节课教授讲了讲根据 m + n - 1 个已知元素构造 m * n 秩 1 矩阵的技巧。就是一个小 trick，听个乐。我们看下图，我来解释一下这个 trick。我们先看左上角 3 * 3 的矩阵，带叉号的元素是已知元素，我们要根据这 5 个已知元素构造出一个 3 * 3 的秩 1 矩阵。根据秩 1 矩阵的特点，我们知道任意一个 2 阶行列子式都等于 0 。因此，一个 2 阶行列子式中如果有三个已知量，第四个就能根据行列式为 0 算出来。因此，下面的 3 * 3 矩阵是可以构造成功的。那么如何验证何时成功何时不成功呢？我们可以根据右下角的 4 * 4 矩阵和其中的已知元素，构造一个连线图，左边的1234代表行，右边的代表列，一个已知元素代表一条连线。如果连线构成一个循环，则不能构造一个秩 1 矩阵，反之可以 (已知元素数量为 m - n + 1)：<br> 
+<div align=center><img src="picture/构造秩1矩阵.png"  width="60%" height="60%"><br>
+<div align=left>
+<br>
+
+>下来介绍关于卷积的内容，在介绍卷积之前，我们看一下循环矩阵的定义。如下图这就是两个循环矩阵，我们发现每一列向量循环下移一格就是下一列的向量，而所有的循环矩阵都可以用矩阵 P 来表示：<br> 
+<div align=center><img src="picture/循环矩阵.png"  width="60%" height="60%"><br>
+<div align=left>
+<br>
+
+>表示的多项式形式如下，并且我们观察到 P 矩阵的平方也是循环矩阵，并且任何矩阵经过 P 矩阵作用后，每一列都向下移一格。还有一个特点就是对于四阶矩阵 P， P^4 = I 单位矩阵，即又循环回来了。根据多项式的特点，循环矩阵乘循环矩阵结果还是循环矩阵：<br> 
+<div align=center><img src="picture/循环矩阵2.png"  width="60%" height="60%"><br>
+<div align=left>
+<br>
+
+>下面正式介绍卷积的定义，卷积其实是定义在多项式上的，如下图所示。两个向量卷积 (3,1,2) * (4,6,1) = (12,22,17,13,2) 其实是 (3+x+2x^2)·(4+6x+x^2) = (12+22x+17x^2+13x^3+2x^4)的系数：<br> 
+<div align=center><img src="picture/卷积.png"  width="60%" height="60%"><br>
+<div align=left>
+<br>
+
+>但是循环卷积就不一样了，如下图所示。因为这是三阶的多项式，因此 x^3 = 1 ，x^4 = x，因此最后两个系数要加到前面两个上面去，得到的结果就是 (25,24,17)：<br> 
+<div align=center><img src="picture/循环卷积.png"  width="70%" height="70%"><br>
+<div align=left>
+<br>
+
+>我们总结成一句话：循环矩阵的乘积完全对应于循环地多项式乘积，这就叫做循环卷积。
+
+>最后我们看一下循环矩阵的特征值和特征向量的特点。首先比较明显的是对于四阶循环矩阵 P ，特征向量一定有 [1,1,1,1] 和 [1,-1,1,-1] 因为 Px = λx，P作用到向量 x 上，向量 x 元素向下移一格，还是原来向量的 λ 倍，这两个明显符合，对应的特征值分别是 1 和 -1。下节课我们会看到特征值还有 i 和 -i。
