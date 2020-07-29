@@ -28,7 +28,7 @@
 
 <!-- /TOC -->
 # MIT 18.065 Matrix Methods in Data Analysis, Signal Processing, and Machine Learning, Spring 2018
->从这个标题可以看到这是 Gilbert Strang 在 2018 年 MIT 的又一课程，查矩阵范数的内容时突然发现的，刚好不想看书(人懒)，就先学这个吧。[课程链接：youtube](https://www.youtube.com/watch?v=Cx5Z-OslNWE&list=PLUl4u3cNGP63oMNUHXqIUcrkS2PivhN3k)。建议安装Dualsub谷歌浏览器翻译插件进行学习。<br>课程主题主要分为四个部分：<br>
+>从这个标题可以看到这是 Gilbert Strang 在 2018 年 MIT 的又一课程，查矩阵范数的内容时突然发现的，刚好不想看书(人懒)，就先学这个吧。[课程链接：youtube](https://www.youtube.com/watch?v=Cx5Z-OslNWE&list=PLUl4u3cNGP63oMNUHXqIUcrkS2PivhN3k)。建议安装Dualsub谷歌浏览器翻译插件进行学习。在 Github 上浏览请在 Chorme 上安装 MathJax Plugin for Github 插件以方便阅读相关数学公式(这个插件好像不能正常显示矩阵)。<br>课程主题主要分为四个部分：<br>
 <div align=center><img src="picture/课程大纲.png"  width="40%" height="40%"><br>
 <div align=left>
 <br>
@@ -78,7 +78,7 @@
 <br>
 
 ## 4. Eigenvalues and Eigenvectors
->这节课首先需要注意的是矩阵 AB 和 BA 的相似关系。AB 和 BA 相似，相似矩阵 M = B，因此 AB 和 BA有相同的特征值，但是 A 的特征值乘 B 的特征值往往不等于 AB 的特征值，同样 A 的特征值加 B 的特征值往往不等于 A + B 的特征值：<br>
+>这节课首先需要注意的是矩阵 AB 和 BA 的相似关系。若 A B 可逆，AB 和 BA 相似，相似矩阵 M = B，因此 AB 和 BA有相同的特征值，但是 A 的特征值乘 B 的特征值往往不等于 AB 的特征值，同样 A 的特征值加 B 的特征值往往不等于 A + B 的特征值：<br>
 <div align=center><img src="picture/AB和BA.png"  width="70%" height="70%"><br>
 <div align=left>
 <br>
@@ -92,7 +92,7 @@
 <br>
 
 ## 6. Singular Value Decomposition (SVD)
->之前我们也花了很大篇幅来说明 SVD，主要是运用 $A·A^T$ 和 $A^T·A$ 的特性去计算分解后两个正交矩阵和特征值的值。但是实际中往往 A 会很庞大，A·AT 的计算量很大，因此我们不常用这种方法。而是，用下图的方法来求得另一组正交矩阵 U ，我们常常是很容易得到矩阵 A 和一组正交矩阵 V，还有特征值。这一组式子来自于我们最初讨论 SVD 时，把一组单位正交基 V 转化为另一组单位正交基 U 的过程。<br>
+>之前我们也花了很大篇幅来说明 SVD，主要是运用 $A·A^T$ 和 $A^T·A$ 的特性去计算分解后两个正交矩阵和特征值的值。但是实际中往往 A 会很庞大，$A·A^T$ 的计算量很大，因此我们不常用这种方法。而是，用下图的方法来求得另一组正交矩阵 U ，我们常常是很容易得到矩阵 A 和一组正交矩阵 V，还有特征值。这一组式子来自于我们最初讨论 SVD 时，把一组单位正交基 V 转化为另一组单位正交基 U 的过程。<br>
 <div align=center><img src="picture/奇异值分解简便.png"  width="70%" height="70%"><br>
 <div align=left>
 <br>
@@ -168,7 +168,7 @@
 <div align=left>
 <br>
 
->上面两个角度我们都假设了 A 是列满秩的，如果列不满秩，则上述方法不可行。同时，当列满秩时，我们发现，上述方法解出 $x-hat = (A^T·A)^-1·A^T·b = A^+·b$ ( A+ 为伪逆)。即当列满秩时，$(A^T·A)^-1·A^T = A^+$ 右乘 A ，左右两式都得到单位矩阵 I (n * n)。这就是第三种方法，但 $x-hat = A^+·b$ 这种方法在列不满秩情况下也可使用：<br>
+>上面两个角度我们都假设了 A 是列满秩的，如果列不满秩，则上述方法不可行。同时，当列满秩时，我们发现，上述方法解出 $x-hat = (A^T·A)^{-1}·A^T·b = A^+·b$ ( $A^+$ 为伪逆)。$(A^T·A)^{-1}·A^T = A^+$ 右乘 A ，左右两式都得到单位矩阵 I (n * n)。这就是第三种方法，但其实 $x-hat = A^+·b$ 这第三种方法在列不满秩情况下也可使用：<br>
 <div align=center><img src="picture/最小二乘3.png"  width="60%" height="60%"><br>
 <div align=left>
 <br>
@@ -189,7 +189,7 @@
 <div align=left>
 <br>
 
->我们可以通过最小化那个式子(求导)，或者解  $(A^T·A+δ^2·I)x = A^T·b$ 这个等式，来得到同一个式子。然后结果 x 在上图的左下角。我们发现如果我们的正则项系数 δ 取 0 ，那么当矩阵 A 为 0 时，即 σ = 0 时，我们的 x 会出现错误(分母为 0)，但是如果我们有正则项，就算 σ = 0 ，我们也能得到两个结果(见上图右下角)。因此正则项不但保证了逆的不理想的情况，也保证了所有情况有解。而这个解的形式最终会和 A+ 相近，即：<br>
+>我们可以通过最小化那个式子(求导)，或者解  $(A^T·A+δ^2·I)x = A^T·b$ 这个等式，来得到同一个式子。然后结果 x 在上图的左下角。我们发现如果我们的正则项系数 δ 取 0 ，那么当矩阵 A 为 0 时，即 σ = 0 时，我们的 x 会出现错误(分母为 0)，但是如果我们有正则项，就算 σ = 0 ，我们也能得到两个结果(见上图右下角)。因此正则项不但保证了逆的不理想的情况，也保证了所有情况有解。而这个解的形式最终会和 $A^+$ 相近，即：<br>
 <div align=center><img src="picture/正则项结果.png"  width="70%" height="70%"><br>
 <div align=left>
 <br>
@@ -224,7 +224,7 @@
 <div align=left>
 <br>
 
->教授给我们举了最小二乘的动态问题，即不断有新样本加入的问题，如下图所示，我们在原本 $A^T·A·x = A^T·b$ 的基础上给 A 增加了更多的行 $v^T$ (样本)，而此时我们问题的构造就如下图一样，也就是给 $A^T·A$ 了一个秩为 $r(v·v^T)$ 的扰动，而要求得 x-new 的值。这个问题类似于卡尔曼滤波器，如果之后碰见再细究：<br>
+>教授给我们举了最小二乘的动态问题，即不断有新样本加入的问题，如下图所示，我们在原本 $A^T·A·x = A^T·b$ 的基础上给 A 增加了更多的行 $v^T$ (样本)，而此时我们问题的构造就如下图一样，也就是给 $A^T·A$ 了一个秩为 $r(v·v^T)$ 的扰动，而要求得 x-new 的值。这个问题类似于卡尔曼滤波器，至于卡尔曼滤波器如果之后碰见再细究：<br>
 <div align=center><img src="picture/最小二乘扰动.png"  width="70%" height="70%"><br>
 <div align=left>
 <br>
